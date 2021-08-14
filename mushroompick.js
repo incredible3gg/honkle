@@ -13,12 +13,14 @@ var shrooms = {
     goldshrooms:0
 }
 var newtext = 0;
+var skill = 3;
 var event = {
     slug:1,
     slugmad:2,
     shroombless:1,
     goldslug:1,
-    goldslugmad:5
+    goldslugmad:5,
+    skill:1,
 }
 const slugs = [{type:"bannana",shroom:"2"},{type:"poop",shroom:"3"},{type:"slimey",shroom:"1"}];
 
@@ -32,6 +34,11 @@ function mushroomcheck() {
 
 function game() {
     console.clear();
+    
+    if (event.skill >= 5) {
+        event.skill = 0;
+        skill += 2;
+    }
 
     if (shrooms.goldshrooms >= 10) {
         rank = "mycelium"
@@ -62,6 +69,7 @@ function game() {
     event.slug +=1
     event.goldslug += 1
     event.shroombless +=1
+    event.skill += 1
     if (event.shroombless >= 20) {
         event.shroombless = 0;
         rl.question("You are blessed with 5 shrooms of any type! Press 1 for red, 2 for brown, and 3 for orange!\n   >", (type) => {
@@ -145,9 +153,9 @@ function game() {
     rl.question("Type 1 to pick mushrooms from the forest, or 2 to buy a golden mushroom with 5 of each normal type. You can also type exit to stop.\n   >", (choice) => {
         switch (choice) {
             case "1":
-                shrooms.redcount += Math.floor((Math.random() * 3)+1)
-                shrooms.browncount += Math.floor((Math.random() * 3)+1)
-                shrooms.orangecount += Math.floor((Math.random() * 3)+1)
+                shrooms.redcount += Math.floor((Math.random() * skill)+1)
+                shrooms.browncount += Math.floor((Math.random() * skill)+1)
+                shrooms.orangecount += Math.floor((Math.random() * skill)+1)
                 newtext = 2;
                 game();
                 break;
