@@ -32,6 +32,7 @@ function mushroomcheck() {
 
 function game() {
     console.clear();
+
     if (shrooms.goldshrooms >= 10) {
         rank = "mycelium"
     } if (shrooms.goldshrooms >= 20) {
@@ -61,7 +62,7 @@ function game() {
     event.slug +=1
     event.goldslug += 1
     event.shroombless +=1
-    if (event.shroombless == 20) {
+    if (event.shroombless >= 20) {
         event.shroombless = 0;
         rl.question("You are blessed with 5 shrooms of any type! Press 1 for red, 2 for brown, and 3 for orange!\n   >", (type) => {
             switch (type) {
@@ -82,8 +83,8 @@ function game() {
             print("You recieved your shrooms. "+mushroomcheck());
             rl.question("\nPress enter to move on.", () => {game()})
         })
-    } else if (event.slug == 4) {
-        event.slug = 0;
+    } else if (event.slug >= 4) {
+        event.slug = 0
         var slug = slugs[Math.floor(Math.random() * slugs.length)];
         print("A "+slug.type+" slug arrives. You must feed it a mushroom it likes. If you feed it the right mushroom,\nit will leave only taking the mushroom you fed it but if you feed it one it doesn't\nlike, it will eat "+event.slugmad+" other mushrooms.\n");
         print("Press 1 to feed it a red shroom, 2 to feed it a brown, and 3 to feed it an orange mushroom.")
@@ -125,7 +126,7 @@ function game() {
             }
         rl.question("\nHit enter to move on.", () => {game()})
         });
-    } else if (event.goldslug == 50) {
+    } else if (event.goldslug >= 50) {
         event.goldslug = 0;
         print("The Golden Slug comes and takes away "+event.goldslugmad+" mushrooms.\n");
         shrooms.goldshrooms -= event.goldslugmad;
