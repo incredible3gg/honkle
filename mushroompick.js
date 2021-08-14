@@ -66,13 +66,13 @@ function game() {
         event.shroombless = 0;
         rl.question("You are blessed with 5 shrooms of any type! Press 1 for red, 2 for brown, and 3 for orange!\n   >", (type) => {
             switch (type) {
-                case 1:
+                case "1":
                     shrooms.redcount += 5
                     break;
-                case 2:
+                case "2":
                     shrooms.browncount += 5
                     break;
-                case 3:
+                case "3":
                     shrooms.browncount += 5
                     break;
                 default:
