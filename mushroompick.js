@@ -92,7 +92,7 @@ function game() {
                     shrooms.browncount += 5
                     break;
                 case "3":
-                    shrooms.browncount += 5
+                    shrooms.orangecount += 5
                     break;
                 default:
                     shrooms.redcount += 2;
