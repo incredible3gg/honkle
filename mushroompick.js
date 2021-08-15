@@ -21,7 +21,7 @@ var event = {
     goldslug:1,
     goldslugmad:5,
     rebirth:function() {
-        print("The golden slugs anger consumes the world of shrooms.");
+        print("The golden slug's anger consumes the world of shrooms.");
         shrooms.browncount = 0;
         shrooms.redcount = 0;
         shrooms.orangecount = 0;
