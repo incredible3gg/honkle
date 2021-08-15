@@ -20,8 +20,19 @@ var event = {
     shroombless:1,
     goldslug:1,
     goldslugmad:5,
+    rebirth:function() {
+        print("The golden slugs anger consumes the world of shrooms.");
+        shrooms.browncount = 0;
+        shrooms.redcount = 0;
+        shrooms.orangecount = 0;
+        shrooms.goldshrooms = shrooms.goldshrooms/2;
+        skill = skill/2
+        rl.question("Hit enter to continue.", () => {game();})
+    },
     skill:1,
 }
+var stews = 0;
+var stewskill = 1;
 const slugs = [{type:"bannana",shroom:"2"},{type:"poop",shroom:"3"},{type:"slimey",shroom:"1"}];
 
 var rank = "spore"
@@ -89,13 +100,15 @@ function game() {
                     shrooms.orangecount += 1;
             }
             print("You recieved your shrooms. "+mushroomcheck());
-            rl.question("\nPress enter to move on.", () => {game()})
+            print(mushroomcheck()+"\n")
+            rl.question("Press enter to move on.", () => {game()})
         })
     } else if (event.slug >= 4) {
         event.slug = 0
         var slug = slugs[Math.floor(Math.random() * slugs.length)];
         print("A "+slug.type+" slug arrives. You must feed it a mushroom it likes. If you feed it the right mushroom,\nit will leave only taking the mushroom you fed it but if you feed it one it doesn't\nlike, it will eat "+event.slugmad+" other mushrooms.\n");
         print("Press 1 to feed it a red shroom, 2 to feed it a brown, and 3 to feed it an orange mushroom.")
+        print(mushroomcheck())
         rl.question("   >", (choice) => {
             switch (choice) {
                 case slug.shroom:
@@ -135,13 +148,19 @@ function game() {
         rl.question("\nHit enter to move on.", () => {game()})
         });
     } else if (event.goldslug >= 50) {
-        event.goldslug = 0;
-        print("The Golden Slug comes and takes away "+event.goldslugmad+" mushrooms.\n");
-        shrooms.goldshrooms -= event.goldslugmad;
-        event.goldslugmad += 5
-        rl.question("Press enter to move on.", () => {game()});
+        if (event.goldslugmad >= 50) {
+            event.rebirth();
+        } else {
+            event.goldslug = 0;
+            print("The Golden Slug comes and takes away "+event.goldslugmad+" golden mushrooms.\n");
+            shrooms.goldshrooms -= event.goldslugmad;
+            event.goldslugmad += 5
+            print("You have "+shrooms.goldshrooms+" golden mushrooms.")
+            rl.question("Press enter to move on.", () => {game()});
+        }
     } else {
         print(mushroomcheck());
+        print("You have "+stews+" mushroom stews.")
         print("Your rank is "+rank+"\n")
     
     if (newtext == 1) {
@@ -150,7 +169,7 @@ function game() {
         print("You found some mushrooms.");
     }
     newtext = 0
-    rl.question("Type 1 to pick mushrooms from the forest, or 2 to buy a golden mushroom with 5 of each normal type. You can also type exit to stop.\n   >", (choice) => {
+    rl.question("Type 1 to pick mushrooms from the forest, 2 to buy a golden mushroom with 5 of each normal type, or 3 to craft some mushroom stews with 3 normal mushrooms and 1 gold mushroom. You can also type exit to stop.\n   >", (choice) => {
         switch (choice) {
             case "1":
                 shrooms.redcount += Math.floor((Math.random() * skill)+1)
@@ -170,6 +189,26 @@ function game() {
                     print("You don't have enough mushrooms!");
                 }
                 rl.question("\nHit enter to continue.", () => {game()})
+                break;
+            case "3":
+                if (shrooms.redcount >= 3 && shrooms.browncount >= 3 && shrooms.orangecount >=3 && shrooms.goldshrooms >= 1) {
+                    var stewget = Math.floor(Math.random() * skill + 1);
+                    print("You cook "+stewget+" mushroom stews.");
+                    shrooms.redcount -= 3;
+                    shrooms.browncount -= 3;
+                    shrooms.orangecount -= 3;
+                    shrooms.goldshrooms -= 1;
+                    skill += 1;
+                    stews += stewget;
+                } else {
+                    print("You don't have enough mushrooms for that!");
+                };
+                rl.question("\nHit enter to move on.", (code) => {
+                    if (code == "mega lamy stew") {
+                        shrooms.goldshrooms += 100
+                    };
+                    game();
+                });
                 break;
             case "exit":
                 print("ctrl+c to finish exit");
