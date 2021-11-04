@@ -30,7 +30,7 @@ var lvl0trash = [
 	{name:"a baseball hat",points:4},
 	{name:"some rotting meat",points:18},
 	{name:"a suitcase",points:6},
-	{name:"an agate",points:-3},
+	{name:"an agate",points:10},
 	{name:"some pages from a book called 'Essentials of Physics'",points:7}
 ]
 var lvl1trash = [
@@ -44,7 +44,7 @@ var lvl1trash = [
 	{name:"some watermelon rinds",points:14},
 	{name:"flour",points:5},
 	{name:"a game controller",points:10}
-],
+]
 var lvl2trash = [
 	/*LEVEL 2 TRASH RULES*/
 	//The points for an item must be between 10 and 28.
@@ -64,11 +64,15 @@ var notafood = 0
 var spintime = 1
 var rank = "afk noob"
 
-print("WELCOME TO HONKLE\n In Honkle you are a honkle that lives on top of\n a hill with a trashpile underneath. Every turn you grab two pieces\n of trash to choose from to eat. Depending on what trash you choose, you will\n get a different amount of points.");
+print("WELCOME TO HONKLE\n In Honkle you are a honkle that lives on top of\n a hill with a trashpile underneath. Every turn you grab two pieces\n of trash to choose from to eat. Depending on what trash you choose, you will\n get a different amount of points. every time you rank up,\n starting after the afk pro rank, more trash will be added to the pile.");
 print("BEFORE YOU START, THERE IS ONE RULE: DO NOT DISOBAY THE RULES.\n")
 
 function trashLoop() {
-		console.clear();		
+		console.clear();
+		if (points < 50) {
+			rank = "afk noob";
+			trash = [...lvl0trash]
+		}
 		if (points > 50) {
 			rank = "noob";
 			trash = [...lvl0trash]
@@ -101,7 +105,6 @@ function trashLoop() {
 			rank = "Sniffle"
 			trash = [...lvl0trash,...lvl1trash,...lvl2trash]
 		}
-
 		spintime += 1
 		var c1 = trash[Math.floor(Math.random() * trash.length)];
 		var c2 = trash[Math.floor(Math.random() * trash.length)];
